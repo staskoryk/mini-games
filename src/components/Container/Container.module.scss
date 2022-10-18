@@ -1,0 +1,9 @@
+@import "src/styles/vars";
+
+.appContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  height: 100vh;
+}
