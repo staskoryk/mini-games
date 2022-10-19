@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './SnakeGame.module.scss'
 import { useInterval } from "../../hooks/useInterval";
 import { useKeyPress } from "../../hooks/useKeyPress";
+import arrowTop from '../../images/arrow-alt-circle-up.png'
+import arrowBottom from '../../images/arrow-alt-circle-down.png'
+import arrowLeft from '../../images/arrow-alt-circle-left.png'
+import arrowRight from '../../images/arrow-alt-circle-right.png'
+import died from '../../images/died.png'
 
 
 const FIELD_SIZE = 16
@@ -31,7 +36,7 @@ const getItem = (x, y, snakeSegments) => {
 
     for (const segment of snakeSegments) {
         if (segment.x === x && segment.y === y) {
-            return <div className={styles.cellSnakeHead}/>
+            return <div className={styles.cellSnake}/>
         }
     }
 }
@@ -94,6 +99,13 @@ const refreshGame = (setSnakeSegments, setScores, setDirection) => {
     }
 }
 
+const checkDirection = (currentDirection, changeDirection, setDirection) => {
+    if (DIRECTION.BOTTOM !== currentDirection && DIRECTION.TOP === changeDirection) setDirection(DIRECTION.TOP)
+    if (DIRECTION.TOP !== currentDirection && DIRECTION.BOTTOM === changeDirection) setDirection(DIRECTION.BOTTOM)
+    if (DIRECTION.LEFT !== currentDirection && DIRECTION.RIGHT === changeDirection) setDirection(DIRECTION.RIGHT)
+    if (DIRECTION.RIGHT !== currentDirection && DIRECTION.LEFT === changeDirection) setDirection(DIRECTION.LEFT)
+}
+
 const SnakeGame = () => {
     const [snakeSegments, setSnakeSegments] = useState([
         {x: 8, y: 7},
@@ -114,7 +126,8 @@ const SnakeGame = () => {
 
     useInterval(() => {
         newSnakePosition(snakeSegments, direction, setSnakeSegments, scores, setScores)
-    },  intersectsWithItself ? null : 75)
+    },  intersectsWithItself ? null : 80)
+
 
     useEffect(() => {
         if (keyTopPressed) {
@@ -146,6 +159,11 @@ const SnakeGame = () => {
                 </div>
             </div>
             <div className={styles.board}>
+                {intersectsWithItself &&
+                    <div className={styles.windowDead}>
+                        <img src={died} alt=""/>
+                    </div>
+                }
                 {FIELD_ROW.map(y => (
                     <div className={styles.cellY} key={y}>
                         {FIELD_ROW.map(x => (
@@ -156,8 +174,20 @@ const SnakeGame = () => {
                     </div>
                 ))}
             </div>
-            <div>
-                <button onClick={() => refreshGame(setSnakeSegments, setScores, setDirection)}>refresh</button>
+            <div className={styles.btnRefresh}>
+                <button onClick={() => refreshGame(setSnakeSegments, setScores, setDirection)}>RESTART</button>
+            </div>
+            <div className={styles.mobileArrows}>
+                <div className={styles.topArrowBlock}>
+                    <img src={arrowTop} alt="" className={styles.arrow} onClick={() => checkDirection(direction, DIRECTION.TOP, setDirection)}/>
+                </div>
+                <div className={styles.arrows}>
+                    <img src={arrowLeft} alt="" className={styles.arrow} onClick={() => checkDirection(direction, DIRECTION.LEFT, setDirection)}/>
+                    <img src={arrowRight} alt="" className={styles.arrow} onClick={() => checkDirection(direction, DIRECTION.RIGHT, setDirection)}/>
+                </div>
+                <div className={styles.bottomArrowBlock}>
+                    <img src={arrowBottom} alt="" className={styles.arrow} onClick={() => checkDirection(direction, DIRECTION.BOTTOM, setDirection)}/>
+                </div>
             </div>
         </div>
     );

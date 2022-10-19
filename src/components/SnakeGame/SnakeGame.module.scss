@@ -1,7 +1,8 @@
 @import "src/styles/vars";
 
 .snakeGameBlock {
-  margin-top: 200px;
+  padding-top: 10px;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -29,9 +30,22 @@
 }
 
 .board {
+  position: relative;
   display: flex;
+  align-items: center;
   flex-direction: column;
   border: 6px solid black;
+  background-color: white;
+}
+
+.windowDead {
+  z-index: 999;
+  left: 16%;
+  top: 20%;
+  position: absolute;
+  img {
+    width: 400px;
+  }
 }
 
 .cellY {
@@ -49,17 +63,11 @@
 }
 
 .cellSnake {
-  width: 36px;
-  height: 36px;
-  background-color: $blue;
-}
-
-.cellSnakeHead {
   width: 26px;
   height: 26px;
   border: 4px solid black;
   border-radius: 8px;
-  background-color: blueviolet;
+  background-color: $blue;
 }
 
 .cellFood {
@@ -68,4 +76,146 @@
   justify-content: center;
   border: 4px solid black;
   background-color: yellow;
+}
+
+.mobileArrows {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.topArrowBlock {
+
+}
+
+.arrows {
+  display: flex;
+  gap: 100px;
+}
+
+.arrow {
+  width: 100px;
+  height: 100px;
+}
+
+.btnRefresh {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  margin-top: 10px;
+  margin-right: 10px;
+  button {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid black;
+  }
+}
+
+
+@media (max-width: 1200px) {
+  .mobileArrows {
+    display: flex;
+  }
+
+  .board {
+    border: 3px solid black;
+  }
+
+  .cellX {
+    height: 30px;
+    width: 30px;
+  }
+
+  .cellSnake {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background-color: $blue;
+  }
+
+  .cellFood {
+    width: 22px;
+    height: 22px;
+    border: 2px solid black;
+    background-color: yellow;
+  }
+
+  .arrow {
+    height: 128px;
+    width: 128px;
+  }
+}
+
+@media (max-width: 700px) {
+  .board {
+    border: 2px solid black;
+  }
+
+  .windowDead {
+    z-index: 999;
+    left: 2%;
+    top: 15%;
+    position: absolute;
+    img {
+      width: 400px;
+    }
+  }
+
+  .cellX {
+    height: 23px;
+    width: 23px;
+    border: 1px solid rgba(0,0,0, .1);
+  }
+
+  .cellSnake {
+    width: 16px;
+    height: 16px;
+    border: 1px solid black;
+    border-radius: 2px;
+  }
+
+  .cellFood {
+    width: 14px;
+    height: 14px;
+    border: 1px solid black;
+  }
+
+  .arrows {
+    gap: 80px;
+  }
+
+  .arrow {
+    height: 90px;
+    width: 90px;
+  }
+}
+
+@media (max-width: 375px) {
+  .cellX {
+    height: 22px;
+    width: 22px;
+    border: 1px solid rgba(0,0,0, .1);
+  }
+  .arrows {
+    gap: 60px;
+  }
+  .arrow {
+    height: 60px;
+    width: 60px;
+  }
+
+  .btnRefresh {
+    button {
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 10px;
+      background-color: white;
+      border: 1px solid black;
+    }
+  }
 }
